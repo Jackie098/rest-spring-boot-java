@@ -4,6 +4,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.learn_java_spring.exceptions.UnsupportedMathOperationException;
+
 @RestController
 public class MathController {
   @GetMapping("/sum/{numberOne}/{numberTwo}")
@@ -11,15 +13,13 @@ public class MathController {
       @PathVariable(value = "numberOne") String numberOne,
       @PathVariable(value = "numberTwo") String numberTwo) throws Exception {
     if (!isNumeric(numberOne) || !isNumeric(numberTwo)) {
-      throw new Exception();
+      throw new UnsupportedMathOperationException("Please set a numeric value");
     }
 
     return convertToDouble(numberOne) + convertToDouble(numberTwo);
   }
 
   private Double convertToDouble(String strNumber) {
-    // if(strNumber == null) return 0D;
-
     String number = strNumber.replaceAll(",", ".");
 
     if (isNumeric(number)) {
