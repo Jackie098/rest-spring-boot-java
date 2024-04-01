@@ -1,4 +1,4 @@
-package com.learn_java_spring.learn_java_spring;
+package com.learn_java_spring;
 
 public class Greeting {
   private final long id;
