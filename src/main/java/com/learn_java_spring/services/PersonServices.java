@@ -41,6 +41,23 @@ public class PersonServices {
     return person;
   }
 
+  public Person create(Person person) {
+    logger.info("Creating one person");
+    logger.info(person.getFirstName());
+
+    return person;
+  }
+
+  public Person update(Person person) {
+    logger.info("Update one person");
+
+    return person;
+  }
+
+  public void delete(String id) {
+    logger.info("Deleting one person");
+  }
+
   private Person mockPerson(int i) {
     Person person = new Person();
 
