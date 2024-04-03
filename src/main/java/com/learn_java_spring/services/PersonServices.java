@@ -1,26 +1,28 @@
 package com.learn_java_spring.services;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.learn_java_spring.data.vo.v1.PersonVO;
+import com.learn_java_spring.data.vo.v2.PersonVOV2;
 import com.learn_java_spring.exceptions.ResourceNotFoundException;
 import com.learn_java_spring.mappers.DozerMapper;
+import com.learn_java_spring.mappers.custom.PersonMapper;
 import com.learn_java_spring.models.Person;
 import com.learn_java_spring.repositories.PersonRepository;
 
 @Service
 public class PersonServices {
-  private final AtomicLong counter = new AtomicLong();
   private Logger logger = Logger.getLogger(PersonServices.class.getName());
 
   @Autowired
   PersonRepository repository;
+
+  @Autowired
+  PersonMapper personMapper;
 
   public List<PersonVO> findAll() {
     logger.info("Finding all people");
@@ -48,6 +50,17 @@ public class PersonServices {
     return vo;
   }
 
+  public PersonVOV2 createV2(PersonVOV2 person) {
+    logger.info("Creating one person V2");
+    logger.info(person.getFirstName());
+
+    var entity = personMapper.convertVoToEntity(person);
+
+    var vo = personMapper.convertEntityToVo(repository.save(entity));
+
+    return vo;
+  }
+
   public PersonVO update(PersonVO person) {
     logger.info("Update one person");
 
@@ -71,17 +84,5 @@ public class PersonServices {
         .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
 
     repository.delete(entity);
-  }
-
-  private PersonVO mockPerson(int i) {
-    PersonVO person = new PersonVO();
-
-    person.setId(counter.incrementAndGet());
-    person.setFirstName("Jack --" + i);
-    person.setLastName("Brand --" + i);
-    person.setAddress("Rua Pa PA --" + i);
-    person.setGender("Male -- " + i);
-
-    return person;
   }
 }
