@@ -11,7 +11,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import com.learn_java_spring.serializations.converter.YamlJackson2HttpMessageConverter;
 
 // FIXME: Configuration of ContentNegotiation for xml converter, does not works
-// FIXME: Configuration of ContentNegotiation for yaml converter, does not works too
+// FIXME: Configuration of ContentNegotiation for yaml converter, does not works
+// too
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
   private static final MediaType MEDIA_TYPE_APPLICATION_YAML = MediaType.valueOf("application/x-yaml");
